@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.22.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.22.4",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
