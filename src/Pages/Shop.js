@@ -1,106 +1,101 @@
-import React from "react"
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react"
+import { useParams } from "react-router";
 import AddCart from "../img/cart-add.png"
 
-class Shop extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            search : props.search,
-            setSearch : props.setSearch,
-            setFilter : props.setFilter,
-            filter : props.filter,
-            cart : props.cart,
-            addToCart : props.addToCart,
-        }
-      };
+const Shop = ({ products, setSearch, search, setFilter, filter, addToCart, cart }) => {
+    const { paramType } = useParams();
     
-    render() {
-        //console.log(this.props.cart)
+    const filterToggle = (value) => {
+        const currentIndex = filter.indexOf(value)
+        const newChecked = [...filter]
 
-        return(
-            <div className="shop">
-                {this.state.wholeCart}
-                <div className="filter">
-                    <h1>Search</h1>
-                    <input id="searchInput" type="text" onChange={e => {
-                        let temp = e.target.value;
-                        document.getElementById("searchInput").value = temp; 
-                        this.state.setSearch(temp);
-                        }}>
-                    </input>
-                    <h1>Filter</h1>
-                    <p>Cakes</p>
-                    <input type="checkbox" onChange={ e => 
-                        this.state.setFilter(prevState => ({
-                            ...prevState, "cakes" : e.target.checked    })
-                        )
-                    } />
-                    <p>Cupcakes</p>
-                    <input type="checkbox" onChange={ e => 
-                        this.state.setFilter(prevState => ({
-                            ...prevState, "pies" : e.target.checked    })
-                        )
-                    } />
-                    <p>Pies</p>
-                    <input type="checkbox" onChange={ e => 
-                        this.state.setFilter(prevState => ({
-                            ...prevState, "cupcakes" : e.target.checked    })
-                        )
-                    } />
-                    <p>Scones</p>
-                    <input type="checkbox" onChange={ e => 
-                        this.state.setFilter(prevState => ({
-                            ...prevState, "scones" : e.target.checked    })
-                        )
-                    } />
-                </div>
-                <div className="products">
-                    {this.props.products.map((curr, key) => {
-                        //console.log(curr.categories[0].slug)
-                        if ((this.props.filter.cakes && this.props.filter.cupcakes && this.props.filter.scones && this.props.filter.pies) || 
-                        (this.props.filter.cakes === this.props.filter.cupcakes === this.props.filter.scones === this.props.filter.pies)){
-                        return(
-                            <div className="card" key={key}>
-                                <div>
-                                    <img className="card-image" src={curr.image.url} alt={curr.id + ".jpeg"}/>
-                                    <div className="flex-apart title-price">
-                                        <p>{curr.name}</p>
-                                        <p>{curr.price.formatted_with_symbol}</p>
-                                    </div>
-                                    <p className="desc">{curr.description.slice(3, -4)}</p>
+        if(currentIndex === -1) {
+            newChecked.push(value)
+        } else {
+            newChecked.splice(currentIndex, 1)
+        }
+
+        setFilter(newChecked)
+    }
+    return(
+        <div className="shop">
+            <div className="filter">
+                <h1>Search</h1>
+                <input id="searchInput" type="text" onChange={e => {
+                    let temp = e.target.value;
+                    document.getElementById("searchInput").value = temp; 
+                    setSearch(temp);
+                    }}>
+                </input>
+                <h1>Filter</h1>
+                <p>Cakes</p>
+                <input type="checkbox" value="cakes" onChange={ e => {
+                    let val = e.target.value;
+                    filterToggle(val)
+                }} />
+                <p>Cupcakes</p>
+                <input type="checkbox" value="cupcakes" onChange={ e => {
+                    let val = e.target.value;
+                    filterToggle(val)
+                }} />
+                <p>Pies</p>
+                <input type="checkbox" value="pies" onChange={ e => {
+                    let val = e.target.value;
+                    filterToggle(val)
+                }} />
+                <p>Scones</p>
+                <input type="checkbox" value="scones" onChange={ e => {
+                    let val = e.target.value;
+                    filterToggle(val)
+                }} />
+            </div>
+            <div className="products">
+                {products.filter((curr) => {
+                    if (search === "" && filter.length === 0) {
+                        return curr
+                    } else if (curr.name.toLowerCase().includes(search.toLowerCase()) && filter.includes(curr.categories[0].slug)) {
+                        return curr
+                    }
+                }).map((curr, key) => {
+                    return(
+                        <div className="card" key={key}>
+                            <div>
+                                <img className="card-image" src={curr.image.url} alt={curr.id + ".jpeg"}/>
+                                <div className="flex-apart title-price">
+                                    <p>{curr.name}</p>
+                                    <p>{curr.price.formatted_with_symbol}</p>
                                 </div>
-                                <div className="addcart-contain">
-                                    <img className="add-cart" src={AddCart} alt="cart-add" onClick={() => this.state.addToCart(curr.id, 1)}/>
-                                </div>
+                                <p className="desc">{curr.description.slice(3, -4)}</p>
                             </div>
-                        )
-                        } else {
-                            if (this.props.filter.cakes && curr.categories[0].slug === "cakes"){
-                                if (curr.categories[0].slug === "cakes"){
-                                    return(
-                                        <div className="card" key={key}>
-                                        <div>
-                                            <img className="card-image" src={curr.image.url} alt={curr.id + ".jpeg"}/>
-                                            <div className="flex-apart title-price">
-                                                <p>{curr.name}</p>
-                                                <p>{curr.price.formatted_with_symbol}</p>
-                                            </div>
-                                            <p className="desc">{curr.description.slice(3, -4)}</p>
+                            <div className="addcart-contain">
+                                <img className="add-cart" src={AddCart} alt="cart-add" onClick={() => addToCart(curr.id, 1)}/>
+                            </div>
+                        </div>
+                    )
+                    /*else {
+                        if (filter.cakes && curr.categories[0].slug === "cakes"){
+                            if (curr.categories[0].slug === "cakes"){
+                                return(
+                                    <div className="card" key={key}>
+                                    <div>
+                                        <img className="card-image" src={curr.image.url} alt={curr.id + ".jpeg"}/>
+                                        <div className="flex-apart title-price">
+                                            <p>{curr.name}</p>
+                                            <p>{curr.price.formatted_with_symbol}</p>
                                         </div>
-                                        <div className="addcart-contain">
-                                            <img className="add-cart" src={AddCart} alt="cart-add" />
-                                        </div>
+                                        <p className="desc">{curr.description.slice(3, -4)}</p>
                                     </div>
-                                    )
-                                }
+                                    <div className="addcart-contain">
+                                        <img className="add-cart" src={AddCart} alt="cart-add" />
+                                    </div>
+                                </div>
+                                )
                             }
                         }
-                        return 0;
-                    })}
-                </div>
+                    }*/
+                })}
             </div>
-        )
-    }
+        </div>
+    )
 }
 export default Shop;

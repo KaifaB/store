@@ -12,10 +12,38 @@ class Home extends React.Component {
             </div>
           </div>
           <div className="grid">
-            <Link to="/shop#cakes" className="item item-1">Cakes</Link>
-            <Link to="/shop#pies" className="item item-2">Pies</Link>
-            <Link to="/shop#cupcakes" className="item item-3">Cupcakes</Link>
-            <Link to="/shop#scones" className="item item-4">Scones</Link>
+            <Link to={
+          {
+            pathname: "/shop",
+            state: {
+              type: "cakes"
+            }
+          }
+        } className="item item-1">Cakes</Link>
+            <Link to={
+          {
+            pathname: "/shop",
+            state : {
+              type: "pies"
+            }
+          }
+        } className="item item-2">Pies</Link>
+            <Link to={
+          {
+            pathname: "/shop",
+            state: {
+              type: "cupcakes"
+            }
+          }
+        } className="item item-3">Cupcakes</Link>
+            <Link to={
+          {
+            pathname: "/shop",
+            state: {
+              type: "scones"
+            }
+          }
+        } className="item item-4">Scones</Link>
           </div>
         </div>
       )

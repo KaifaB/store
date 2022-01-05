@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //CommerceJS key info
 import { commerce } from '../Commerce/Commerce'
 //Pages
@@ -17,7 +17,7 @@ function App() {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState({})
   const [search, setSearch] = useState('')
-  const [filter, setFilter] = useState({ 'cakes': false, 'pies': false, 'cupcakes': false, 'scones' : false })
+  const [filter, setFilter] = useState([])
   const [order, setOrder] = useState({})
   const [errorMessage, setErrorMessage] = useState('')
   //function to fetch products list
@@ -79,7 +79,7 @@ function App() {
   useEffect(() => {
     fetchProducts();
     fetchCart();
-    console.log(cart)
+    console.log(filter)
   }, [search, filter])
 
   return (
@@ -94,7 +94,7 @@ function App() {
         />
         <Routes>
           <Route element={<Home />} path="/" />
-          <Route path="/shop" element={<Shop 
+          <Route path="/shop/:paramType" element={<Shop 
             products={products} 
             setSearch={setSearch} 
             search={search} 

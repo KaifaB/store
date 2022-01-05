@@ -13,11 +13,10 @@ function Nav({totalItems}) {
     <div className="nav">
       <Link to="/"><img className="icon" src={Icon} alt="store-icon" /></Link>
       <ul>
-        <li></li>
-        <Link to="/shop"><li>Cakes</li></Link>
-        <Link to="/shop"><li>Pies</li></Link>
-        <Link to="/shop"><li>Muffins</li></Link>
-        <Link to="/shop"><li>Cupcakes</li></Link>
+        <Link to="/shop/cakes"><li>Cakes</li></Link>
+        <Link to="/shop/pies"><li>Pies</li></Link>
+        <Link to="/shop/cupcakes"><li>Cupcakes</li></Link>
+        <Link to="/shop/scones"><li>Scones</li></Link>
         <Link to="/recipes"><li>Recipes</li></Link>
       </ul>
       <div className="cart-contain" onClick={showCart}>
