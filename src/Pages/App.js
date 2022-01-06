@@ -79,8 +79,7 @@ function App() {
   useEffect(() => {
     fetchProducts();
     fetchCart();
-    console.log(filter)
-  }, [search, filter])
+  }, [])
 
   return (
     <div className="App">

@@ -1,14 +1,32 @@
-import React, { useState } from "react"
-import { useParams } from "react-router";
+import React, { useState, useEffect } from "react"
+import { useParams } from "react-router"
 import AddCart from "../img/cart-add.png"
 
 const Shop = ({ products, setSearch, search, setFilter, filter, addToCart, cart }) => {
-    const { paramType } = useParams();
-    
+    let { paramType } = useParams();
+    //RUNS ONCE
+    useEffect(() => {
+        if (paramType) {
+            setFilter([paramType])
+            paramType = ''
+        }
+    }, [paramType] )
+
+    useEffect(() => {
+        let inputs = document.getElementsByClassName("checks")
+        Array.from(inputs).forEach((curr) => {
+            curr.checked = false
+            if (filter.includes(curr.value)){
+                curr.checked = true
+            }
+        })
+        console.log(filter)
+    }, [search, filter])
+
     const filterToggle = (value) => {
         const currentIndex = filter.indexOf(value)
         const newChecked = [...filter]
-
+        //console.log(newChecked)
         if(currentIndex === -1) {
             newChecked.push(value)
         } else {
@@ -29,31 +47,35 @@ const Shop = ({ products, setSearch, search, setFilter, filter, addToCart, cart 
                 </input>
                 <h1>Filter</h1>
                 <p>Cakes</p>
-                <input type="checkbox" value="cakes" onChange={ e => {
-                    let val = e.target.value;
-                    filterToggle(val)
-                }} />
-                <p>Cupcakes</p>
-                <input type="checkbox" value="cupcakes" onChange={ e => {
+                <input type="checkbox" className="checks" value="cakes" onChange={ e => {
                     let val = e.target.value;
                     filterToggle(val)
                 }} />
                 <p>Pies</p>
-                <input type="checkbox" value="pies" onChange={ e => {
+                <input type="checkbox" className="checks" value="pies" onChange={ e => {
+                    let val = e.target.value;
+                    filterToggle(val)
+                }} />
+                <p>Cupcakes</p>
+                <input type="checkbox" className="checks" value="cupcakes" onChange={ e => {
                     let val = e.target.value;
                     filterToggle(val)
                 }} />
                 <p>Scones</p>
-                <input type="checkbox" value="scones" onChange={ e => {
+                <input type="checkbox" className="checks" value="scones" onChange={ e => {
                     let val = e.target.value;
                     filterToggle(val)
                 }} />
             </div>
             <div className="products">
                 {products.filter((curr) => {
-                    if (search === "" && filter.length === 0) {
+                    if (search === '' && filter.length === 0) {
+                        return curr
+                    } else if (search === '' && filter.includes(curr.categories[0].slug)){
                         return curr
                     } else if (curr.name.toLowerCase().includes(search.toLowerCase()) && filter.includes(curr.categories[0].slug)) {
+                        return curr
+                    } else if (curr.name.toLowerCase().includes(search.toLowerCase()) && (filter.length === 0)){
                         return curr
                     }
                 }).map((curr, key) => {
