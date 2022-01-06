@@ -32,9 +32,9 @@ const CheckOut = ({ cart, setCart, order, onCaptureCheckout, error }) => {
   const nextStep = () => {setActiveStep((prevActiveStep) => prevActiveStep + 1)}
   const backStep = () => {setActiveStep((prevActiveStep) => prevActiveStep - 1);setCart(cart)}
 
-  const next = (data) => {
+  const next = (e, data) => {
     setShippingData(data)
-
+    console.log(data)
     nextStep();
   }
 

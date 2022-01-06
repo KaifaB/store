@@ -95,12 +95,12 @@ function AddressForm({ checkoutToken, next }) {
                         })}
                     </select>
                 </div>
+                <br />
+                <div>
+                    <Link to="/"><button type="button">Back to Home</button></Link>
+                    <button type="submit">Next</button>
+                </div>
             </form>
-            <br />
-            <div>
-                <Link to="/"><button>Back to Home</button></Link>
-                <button type="submit" onClick={() => next()}>Next</button>
-            </div>
         </FormProvider>
     );
 }

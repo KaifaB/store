@@ -35,7 +35,7 @@ function Footer() {
           </div>
       </div>
       <div className="footer-bottom">
-        <img src={Icon} className="icon" />
+        <img src={Icon} alt="footer-icon" className="icon" />
       </div>
     </div>
   );

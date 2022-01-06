@@ -4,8 +4,8 @@ const Review = ( {checkoutToken} ) => {
   return (
     <div className="review">
         <div class="items">
-            {checkoutToken.live.line_items.map((product) => (
-                <div className="product">
+            {checkoutToken.live.line_items.map((product, key) => (
+                <div className="product" key={key}>
                     <div className="review-item">
                         <p>{product.name}</p>
                         <p>Quantity: {product.quantity}</p>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { useParams } from "react-router"
 import AddCart from "../img/cart-add.png"
 
@@ -78,6 +78,7 @@ const Shop = ({ products, setSearch, search, setFilter, filter, addToCart, cart 
                     } else if (curr.name.toLowerCase().includes(search.toLowerCase()) && (filter.length === 0)){
                         return curr
                     }
+                    return 0;
                 }).map((curr, key) => {
                     return(
                         <div className="card" key={key}>

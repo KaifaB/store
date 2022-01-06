@@ -7,6 +7,7 @@ const Field = ({ name, label, type }) => {
     return (
             <Controller 
             control={control}
+            defaultValue=""
             render = {({field}) => (
                 <div class="field">
                     <input type={type} name="name" autoComplete="off" required/>
