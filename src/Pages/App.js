@@ -74,8 +74,10 @@ function App() {
       refreshCart();
     } catch (error) {
       setErrorMessage(error.data.error.message)
+      console.log(error)
     }
   }
+  
   useEffect(() => {
     fetchProducts();
     fetchCart();
@@ -93,6 +95,16 @@ function App() {
         />
         <Routes>
           <Route element={<Home />} path="/" />
+          <Route path="/shop" element={<Shop 
+            products={products} 
+            setSearch={setSearch} 
+            search={search} 
+            setFilter={setFilter} 
+            filter={filter}
+            addToCart={addToCart}
+            cart={cart}
+            />}
+          />
           <Route path="/shop/:paramType" element={<Shop 
             products={products} 
             setSearch={setSearch} 

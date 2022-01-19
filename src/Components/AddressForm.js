@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
-import { useForm, FormProvider } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 import Field from "../Components/Field"
 
 import { commerce } from '../Commerce/Commerce'
 
-function AddressForm({ checkoutToken, next }) {
+function AddressForm({ checkoutToken, next, setShippingData }) {
     //for use form dependency
-    const methods = useForm();
+    const { register, handleSubmit } = useForm();
     //all states for countries and subdivisions/states
     const [shippingCountries, setShippingCountries] = useState([])
     const [shippingCountry, setShippingCountry] = useState('')
@@ -56,52 +56,56 @@ function AddressForm({ checkoutToken, next }) {
         if (shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision)
     }, [shippingSubdivision])
 
+    const onSubmit = (data) => {
+        console.log(data)
+        setShippingData(data)
+        next(data)
+    }
+
     return (
-        <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit((data) => next({ ...data, shippingCountry, shippingSubdivision, shippingOption }))}>
-                <Field name='firstName' label="First Name" type='text'/>
-                <Field name='lastName' label="Last Name" type='text'/>
-                <Field name='address' label="Address" type='text'/>
-                <Field name='email' label="Email" type='email'/>
-                <Field name='city' label="City" type='text'/>
-                <Field name='zip' label="Zip Code" type='text'/>
-                <div className="selections">
-                    <label>Country</label>
-                    <select value={shippingCountry} onChange={e => {setShippingCountry(e.target.value)}}>
-                        {countries.map((country)=>{
-                            return(
-                                <option key={country.id} value={country.id}>{country.label}</option>
-                            )
-                        })}
-                    </select>
-                </div>
-                <div className="selections">
-                    <label>Subdivision</label>
-                    <select value={shippingSubdivision} onChange={e => {setShippingSubdivision(e.target.value)}}>
-                        {subdivisions.map((sub)=>{
-                            return(
-                                <option key={sub.id} value={sub.id}>{sub.label}</option>
-                            )
-                        })}
-                    </select>
-                </div>
-                <div className="selections">
-                    <label>Shipping Options</label>
-                    <select value={shippingOption} onChange={e => {setShippingOption(e.target.value)}}>
-                        {options.map((sub)=>{
-                            return(
-                                <option key={sub.id} value={sub.id}>{sub.label}</option>
-                            )
-                        })}
-                    </select>
-                </div>
-                <br />
-                <div>
-                    <Link to="/"><button type="button">Back to Home</button></Link>
-                    <button type="submit">Next</button>
-                </div>
-            </form>
-        </FormProvider>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Field name='firstName' label="First Name" type='text' register={register}/>
+            <Field name='lastName' label="Last Name" type='text' register={register}/>
+            <Field name='address' label="Address" type='text' register={register}/>
+            <Field name='email' label="Email" type='text' register={register}/>
+            <Field name='city' label="City" type='text' register={register}/>
+            {/*<Field name='zip' label="Zip Code" type='text' register={register}/>*/}
+            <div className="selections">
+                <label>Country</label>
+                <select value={shippingCountry} onChange={e => {setShippingCountry(e.target.value)}}>
+                    {countries.map((country)=>{
+                        return(
+                            <option key={country.id} value={country.id} {...register("shippingCountry", {require: true})}>{country.label}</option>
+                        )
+                    })}
+                </select>
+            </div>
+            <div className="selections">
+                <label>Subdivision</label>
+                <select value={shippingSubdivision} onChange={e => {setShippingSubdivision(e.target.value)}}>
+                    {subdivisions.map((sub)=>{
+                        return(
+                            <option key={sub.id} value={sub.id} {...register("shiipingSubdivision", {require: true})}>{sub.label}</option>
+                        )
+                    })}
+                </select>
+            </div>
+            <div className="selections">
+                <label>Shipping Options</label>
+                <select value={shippingOption} onChange={e => {setShippingOption(e.target.value)}}>
+                    {options.map((sub)=>{
+                        return(
+                            <option key={sub.id} value={sub.id} {...register("shippingOption", {require: true})}>{sub.label}</option>
+                        )
+                    })}
+                </select>
+            </div>
+            <br />
+            <div>
+                <Link to="/"><button type="button">Back to Home</button></Link>
+                <button type="submit">Next</button>
+            </div>
+        </form>
     );
 }
 

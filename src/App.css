@@ -2,7 +2,9 @@
   padding: 0;
   margin: 0;
 }
-
+body{
+  box-sizing: border-box;
+}
 
 /*-------------FLEX CLASSES---------------*/
 .flex{
@@ -23,7 +25,6 @@
   align-items: center;
   width: 100%;
   height: 9%;
-  border-bottom: 1px rgb(185, 185, 185) solid;
 }
 .nav ul{
   width: 100%;
@@ -51,6 +52,32 @@
   top: 0;
   left: 0;
   border-bottom:2px rgb(169, 231, 169) solid;
+}
+.contain-search{
+  displaY: flex;
+  justify-content: space-between;
+  border: black solid 2px;
+  border-radius: 15px;
+  width: 200px;
+  height: 20px;
+}
+.contain-search img{
+  border-radius: 50%;
+  align-self: center;
+  background-color: rgb(169, 231, 169);
+  margin-right: 4px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+.contain-search input{
+  
+  align-self: center;
+  margin-left: 8px;
+  height: 90%;
+  width: 80%;
+  border: none;
+  outline: none;
 }
 .icon{
   margin: 0 20px;
@@ -83,33 +110,84 @@
   width: 100%;
   height: auto;
 }
-.welcome-back{
-  background: url('./img/bakery.jpg');
-  background-repeat: none;
-  background-size: cover;
-  height: 100vh;
-  width: 100%
-}
-.welcome{
+.slider{
+  position: relative;
   width: 100%;
-  height: 100%;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.6);
-  color:rgb(88, 88, 88);
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 64px;
+  overflow-x: hidden;
 }
-.welcome button{
-  width: 100px;
-  height: 40px;
-  color:white;
-  border: none;
-  border-radius: 15px;
-  background-color:rgb(169, 231, 169);
+.arrow{
+  width: 30px;
+  height: 30px;
+  opacity: 0.5;
+}
+.prev-slide{
+  background:rgba(180, 180, 180, 0.7);
+  padding: 12px;
+  position: absolute;
+  top: 50%;
+  left: 0;
   cursor: pointer;
+  z-index: 1;
+}
+.arrows{
+  border-radius: 50%;
+}
+.arrows:hover{
+  background-color: rgb(169, 231, 169);
+}
+.arrows:active{
+  background-color: rgb(138, 190, 138);
+}
+.next-slide{
+  background:rgba(180, 180, 180, 0.7);
+  padding: 12px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+.slides{
+  background-color: #FDF1EE;
+  overflow-y:hidden;
+  display: flex;
+  width: 300vw;
+  height: 100vh;
+  overflow-x:hidden;
+  transition: all 0.7s ease-in-out;
+}
+.slide{
+  position:relative;
+  display:flex;
+  justify-content: space-around;
+  width: 33%;
+}
+.slide img{
+  margin-left: 50px;
+  align-self: center;
+  width: 30%;
+  height: 60%;
+}
+.slide-message{
+  margin-right: 50px;
+  width: 50%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+.slide-message p{
+  text-align: left;
+}
+.first::before{
+  content: '';
+  position:absolute;
+  width: 540px;
+  height: 540px;
+  top: 120px;
+  left: 70px;
+  background-color: rgb(58, 184, 58);
+  border-radius: 50%;
+  z-index: -1;
 }
 .grid{
   margin: 100px auto;
@@ -221,11 +299,62 @@
   overflow-x:auto;
 }
 .filter{
-  display:fixed;
   width: 300px;
   height: 100%;
   box-shadow: 8px 0 5px -2px rgb(184, 184, 184);
   z-index: 2;
+}
+.filter-contain{
+  margin: 16px 0;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.filter-item{
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  height: 40px;
+  margin: 16px auto;
+  display:flex;
+}
+.new-check{
+  position:relative;
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  border: rgb(150, 150, 150) 1px solid;
+}
+.new-check:after{
+  position:absolute;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  content:'';
+  background-image: url('./img/check.png');
+  z-index: 2;
+  background-size:cover;
+}
+.labels{
+  height: 36px;
+  width: 120px;
+  display:flex;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  background: rgb(230, 230, 230);
+}
+
+.checks:checked + .new-check:after{
+  display:block !important;
+}
+.checks:checked + .labels{
+  background-color: rgb(138, 190, 138);
+}
+.filter-item input{
+  display: none;
+}
+.filter-item label{
+  cursor: pointer;
 }
 .card{
   display: flex;

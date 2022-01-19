@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { useParams } from "react-router"
 import AddCart from "../img/cart-add.png"
+import check from "../img/check.png"
 
 const Shop = ({ products, setSearch, search, setFilter, filter, addToCart, cart }) => {
     let { paramType } = useParams();
@@ -45,27 +46,49 @@ const Shop = ({ products, setSearch, search, setFilter, filter, addToCart, cart 
                     setSearch(temp);
                     }}>
                 </input>
-                <h1>Filter</h1>
-                <p>Cakes</p>
-                <input type="checkbox" className="checks" value="cakes" onChange={ e => {
-                    let val = e.target.value;
-                    filterToggle(val)
-                }} />
-                <p>Pies</p>
-                <input type="checkbox" className="checks" value="pies" onChange={ e => {
-                    let val = e.target.value;
-                    filterToggle(val)
-                }} />
-                <p>Cupcakes</p>
-                <input type="checkbox" className="checks" value="cupcakes" onChange={ e => {
-                    let val = e.target.value;
-                    filterToggle(val)
-                }} />
-                <p>Scones</p>
-                <input type="checkbox" className="checks" value="scones" onChange={ e => {
-                    let val = e.target.value;
-                    filterToggle(val)
-                }} />
+                <div className="filter-contain">
+                    <h1>Filter</h1>
+                    <div className="filter-item">
+                        <input type="checkbox" className="checks" value="cakes" id="check1" onChange={ e => {
+                            let val = e.target.value;
+                            filterToggle(val)
+                        }} />
+                        <label htmlFor="check1" className="labels">
+                            <div class="new-check"></div>
+                            Cakes
+                        </label>
+                    </div>
+                    <div className="filter-item">
+                        <input type="checkbox" className="checks" value="pies" id="check2" onChange={ e => {
+                            let val = e.target.value;
+                            filterToggle(val)
+                        }} />
+                        <label htmlFor="check2" className="labels">
+                            <div class="new-check"></div>
+                            Pies
+                        </label>
+                    </div>
+                    <div className="filter-item">
+                        <input type="checkbox" className="checks" value="cupcakes" id="check3" onChange={ e => {
+                            let val = e.target.value;
+                            filterToggle(val)
+                        }} />
+                        <label htmlFor="check3" className="labels">
+                            <div class="new-check"></div>
+                            Cupcakes
+                        </label>
+                    </div>
+                    <div className="filter-item">
+                        <input type="checkbox" className="checks" value="scones" id="check4" onChange={ e => {
+                            let val = e.target.value;
+                            filterToggle(val)
+                        }} />
+                        <label htmlFor="check4" className="labels">
+                            <div class="new-check"></div>
+                            Scones
+                        </label>
+                    </div>
+                </div>
             </div>
             <div className="products">
                 {products.filter((curr) => {

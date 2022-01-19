@@ -7,8 +7,6 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
 const PaymentForm = ({checkoutToken, shippingData, backStep, nextStep, onCaptureCheckout, timeout}) => {
 
-    console.log(shippingData)
-
     const handleSubmit = async (e, elements, stripe) => {
         e.preventDefault();
 
@@ -17,26 +15,26 @@ const PaymentForm = ({checkoutToken, shippingData, backStep, nextStep, onCapture
         const CardElem = elements.getElement(CardElement);
 
         const {error, paymentMethod } = await stripe.createPaymentMethod({ type: 'card', card: CardElem });
-
+        console.log(checkoutToken)
         if(error) {
             console.log(error)
         } else {
             const orderData = {
-                list_items: checkoutToken.live.line_items,
-                customer: {firstname: shippingData.firstName, lastname: shippingData.lastName, email: shippingData.email},
-                shipping: {
-                    name: "Primary",
-                    street: shippingData.address,
-                    town_city: shippingData.city,
-                    county_state: shippingData.shippingSibdivision,
-                    postal_zip_code: shippingData.zip,
-                    country: shippingData.shippingCountry
+                "line_items": checkoutToken.live.line_items,
+                "customer": {"firstname": shippingData.firstName, "lastname": shippingData.lastName, "email": shippingData.email},
+                "shipping": {
+                    "name": shippingData.firstName,
+                    "street": shippingData.address,
+                    "town_city": shippingData.city,
+                    "county_state": shippingData.shippingSibdivision,
+                    "postal_zip_code": shippingData.zip,
+                    "country": shippingData.shippingCountry
                 },
-                fulfillment: {shipping_method: shippingData.shippingOption},
-                payment: {
-                    gateway: 'stripe',
-                    stripe: {
-                        payment_method_id: paymentMethod.id
+                "fulfillment": {"shipping_method": shippingData.shippingOption},
+                "payment": {
+                    "gateway": "stripe",
+                    "stripe": {
+                        "payment_method_id": paymentMethod.id
                     }
                 }
             }
@@ -46,6 +44,7 @@ const PaymentForm = ({checkoutToken, shippingData, backStep, nextStep, onCapture
             timeout()
 
             nextStep()
+
         }
     }
 

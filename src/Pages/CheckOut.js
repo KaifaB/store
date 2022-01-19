@@ -22,6 +22,7 @@ const CheckOut = ({ cart, setCart, order, onCaptureCheckout, error }) => {
 
         setCheckoutToken(token)
       } catch (error){
+        console.log(error)
         navigate('/')
       }
     }
@@ -30,11 +31,10 @@ const CheckOut = ({ cart, setCart, order, onCaptureCheckout, error }) => {
   }, [cart])
 
   const nextStep = () => {setActiveStep((prevActiveStep) => prevActiveStep + 1)}
+
   const backStep = () => {setActiveStep((prevActiveStep) => prevActiveStep - 1);setCart(cart)}
 
-  const next = (e, data) => {
-    setShippingData(data)
-    console.log(data)
+  const next = () => {
     nextStep();
   }
 
@@ -50,13 +50,20 @@ const CheckOut = ({ cart, setCart, order, onCaptureCheckout, error }) => {
   ) : isFinished ? (
     <div>
       <h1>Thank You For Your Purchase</h1>
+      <button onClick={() => {navigate('/')}}>Back Home</button>
     </div>
   ) : (
     <h2>Loading...</h2>
   )
 
+  if (error) {
+    <>
+      <div>{error}</div>
+    </>
+  }
+
   const Form = () => activeStep === 0
-  ? <AddressForm checkoutToken={checkoutToken} next={next} /> :
+  ? <AddressForm checkoutToken={checkoutToken} next={next} setShippingData={setShippingData}/> :
     <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} backStep={backStep} onCaptureCheckout={onCaptureCheckout} nextStep={nextStep} timeout={timeout} />
 
   return(

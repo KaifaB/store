@@ -3,7 +3,7 @@ import React from "react";
 const Review = ( {checkoutToken} ) => {
   return (
     <div className="review">
-        <div class="items">
+        <div className="items">
             {checkoutToken.live.line_items.map((product, key) => (
                 <div className="product" key={key}>
                     <div className="review-item">
